@@ -1,6 +1,7 @@
 import React from "react";
 
 import Accordion from "./components/Accordion";
+import Search from "./components/Search";
 
 const accordionItems = [
   {
@@ -18,7 +19,7 @@ const accordionItems = [
 ];
 
 const App = () => {
-  return <Accordion showItems={accordionItems} />;
+  return <Search />;
 };
 
 export default App;
