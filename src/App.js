@@ -27,10 +27,6 @@ const dropdownOptions = [
 ];
 
 const App = () => {
-  const [selectedDropdownItem, setSelectedDropdownItem] = useState(
-    dropdownOptions[0]
-  );
-
   return <Translate />;
 };
 
