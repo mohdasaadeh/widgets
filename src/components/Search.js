@@ -4,6 +4,17 @@ import axios from "axios";
 const Search = () => {
   const [term, setTerm] = useState("programming");
   const [result, setResult] = useState([]);
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 500);
+
+    return () => {
+      clearTimeout(timeOutId);
+    };
+  }, [term]);
 
   useEffect(() => {
     const search = async () => {
@@ -20,24 +31,10 @@ const Search = () => {
       setResult(data.query.search);
     };
 
-    // This if statement was added to avoid delaying making the request when the page first loads,
-    // but result.length variable caused a warning that it should be included in the second argument
-    // of the useEffect function, then when it got added, it caused another problem which is when
-    // the page first loads, the length of the result is undefined because there is no result, so
-    // when the request is done, the result length gets a value which causes another unnecessary request.
-    // So this issue let us find another way of handling this debouncing function.
-    if (term && result.length) {
-      const timeOutId = setTimeout(() => {
-        search();
-      }, 500);
-
-      return () => {
-        clearTimeout(timeOutId);
-      };
-    } else {
+    if (debouncedTerm) {
       search();
     }
-  }, [term, result.length]);
+  }, [debouncedTerm]);
 
   const resultRender = result.map((item) => {
     return (
