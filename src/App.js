@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Accordion from "./components/Accordion";
 import Dropdown from "./components/Dropdown";
 import Search from "./components/Search";
+import Translate from "./components/Translate";
 
 const accordionItems = [
   {
@@ -30,13 +31,7 @@ const App = () => {
     dropdownOptions[0]
   );
 
-  return (
-    <Dropdown
-      options={dropdownOptions}
-      selectedItem={selectedDropdownItem}
-      onItemSelect={setSelectedDropdownItem}
-    />
-  );
+  return <Translate />;
 };
 
 export default App;
