@@ -13,10 +13,21 @@ const Dropdown = ({ label, options, selectedItem, onItemSelect }) => {
       setOpen(false);
     };
 
-    document.body.addEventListener("click", onBodyClick);
+    // We added { capture: true } because when we want to unmount the Dropdown component,
+    // we click on any of the other widgets, and when we click we should activate this event
+    // listener before anything else and especially before the Dropdown component gets unmounted.
+    // And what happens without it is when we click on another widget, the Dropdown component
+    // gets unmounted then the event listener listens for that click, and when it listens, it will
+    // find the dropdownRef is undefined because the component already got unmounted.
+    document.body.addEventListener("click", onBodyClick, { capture: true });
 
     return () => {
-      document.body.removeEventListener("click", onBodyClick);
+      // And { capture: true } again was added here to synchronize this remove event listener
+      // with it's related add one. Without it, this listener won't be connected
+      // to anything and will act as if it's not there.
+      document.body.removeEventListener("click", onBodyClick, {
+        capture: true,
+      });
     };
   }, []);
 

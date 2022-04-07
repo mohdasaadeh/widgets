@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import Accordion from "./components/Accordion";
 import Dropdown from "./components/Dropdown";
+import Header from "./components/Header";
+import Route from "./components/Route";
 import Search from "./components/Search";
 import Translate from "./components/Translate";
 
@@ -27,7 +29,30 @@ const dropdownOptions = [
 ];
 
 const App = () => {
-  return <Translate />;
+  const [selectedDropdown, setSelectedDropdown] = useState(dropdownOptions[0]);
+
+  return (
+    <div>
+      <Header />
+      <Route path="/">
+        <Accordion showItems={accordionItems} />
+      </Route>
+      <Route path="/dropdown">
+        <Dropdown
+          label="Select a Color"
+          options={dropdownOptions}
+          selectedItem={selectedDropdown}
+          onItemSelect={setSelectedDropdown}
+        />
+      </Route>
+      <Route path="/search">
+        <Search />
+      </Route>
+      <Route path="/translate">
+        <Translate />
+      </Route>
+    </div>
+  );
 };
 
 export default App;
